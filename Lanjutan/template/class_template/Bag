@@ -1,0 +1,82 @@
+#ifndef BAG_H
+#define BAG_H
+template <class T>
+class Bag
+{
+public:
+	bool isPenuh();
+	bool isKosong();
+	bool simpan(T);
+	bool berikutnya(T&);
+        int banyaknyaElemen();
+	Bag(int sz=10);
+	~Bag();
+private:
+	int mCurrPos;
+	int mCount;
+	int mSize;
+	T* p;
+};
+
+// implementation
+template <class T>
+Bag<T>::Bag(int sz)
+{
+	mSize=sz;
+	mCount=0;
+	mCurrPos=-1;
+	p=new T[mSize];
+}
+
+template <class T>
+Bag<T>::~Bag()
+{
+	delete []p;
+}
+
+template <class T>
+bool Bag<T>::isPenuh()
+{
+	if (mCount == mSize) return true;
+	else return false;
+}
+
+template <class T>
+bool Bag<T>::isKosong()
+{
+	if (mCount == 0) return true;
+	else return false;
+}
+
+template <class T>
+bool Bag<T>::simpan(T d)
+{
+	if (!isPenuh()) {
+		if (isKosong()) mCurrPos=0;
+		p[mCount++]=d;
+		return true; // berhasil
+	}
+	else
+		return false;
+}
+
+template <class T>
+bool Bag<T>::berikutnya(T& d)
+{
+	if (!isKosong()) {
+		if ((mCurrPos == mSize-1) || (mCurrPos == mCount)) mCurrPos=0;
+		d=p[mCurrPos];
+		++mCurrPos;
+		return true; // true
+	}
+	else
+		return false; // masih kosong
+}
+
+template <class T>
+int Bag<T>::banyaknyaElemen()
+{
+    return mCount;
+}
+
+#endif 
